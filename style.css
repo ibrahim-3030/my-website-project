@@ -248,3 +248,60 @@ footer {
         text-align: center;
     }
 }
+/* ================================
+   FINAL MOBILE FIX (UNDER 500px)
+================================ */
+@media (max-width: 500px) {
+
+    /* منع أي عنصر يطلع برة الشاشة */
+    * {
+        max-width: 100%;
+    }
+
+    html, body {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    /* إلغاء أي عرض ثابت */
+    section,
+    header,
+    footer,
+    div {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* إصلاح Flex في RTL */
+    .navbar,
+    .hero-badges,
+    .projects-grid,
+    .subjects-grid,
+    .footer-content,
+    .simple-info-card {
+        flex-wrap: wrap !important;
+    }
+
+    /* إصلاح الجريد */
+    .projects-grid,
+    .subjects-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* منع الكروت من الكسر */
+    .project-card,
+    .subject-card,
+    .comparison-card {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    /* الصور */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+}
+
