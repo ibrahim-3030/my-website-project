@@ -8,6 +8,7 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -16,6 +17,7 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     direction: rtl;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .container {
@@ -82,8 +84,44 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
 }
 
+/* زر القائمة المتنقلة - مخفي على الشاشات الكبيرة */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+}
+
+.mobile-menu-toggle:hover {
+    color: #3498db;
+}
+
+/* زر إغلاق القائمة */
+.close-menu-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1002;
+    display: none;
+}
+
+/* القائمة الرئيسية */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -121,6 +159,19 @@ header {
 
 .nav-menu i {
     font-size: 1.2rem;
+}
+
+/* طبقة التعتيم خلف القائمة */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(3px);
 }
 
 /* ===== HERO SECTION ===== */
@@ -163,6 +214,8 @@ header {
     font-weight: bold;
     font-size: 1.1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    user-select: none;
 }
 
 .badge.html {
@@ -326,6 +379,7 @@ header {
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .comparison-card:hover {
@@ -507,6 +561,8 @@ header {
     gap: 15px;
     border-right: 4px solid #3498db;
     transition: transform 0.3s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
 .simple-info-card:hover {
@@ -631,6 +687,8 @@ header {
     text-align: center;
     border-top: 4px solid #3498db;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
 .subject-card:hover {
@@ -699,6 +757,7 @@ header {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     border: 1px solid #ecf0f1;
+    cursor: pointer;
 }
 
 .project-card:hover {
@@ -753,6 +812,8 @@ header {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
+    cursor: pointer;
+    user-select: none;
 }
 
 /* قسم الهوايات البسيط */
@@ -789,6 +850,8 @@ header {
     background-color: #f8f9fa;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
 .simple-hobby:hover {
@@ -841,6 +904,7 @@ header {
     font-size: 1.1rem;
     line-height: 1.7;
     text-align: justify;
+    hyphens: auto;
 }
 
 /* ===== FOOTER ===== */
@@ -950,6 +1014,7 @@ footer {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .back-to-top:hover {
@@ -957,93 +1022,7 @@ footer {
     transform: translateY(-5px);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-    .nav-menu {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-menu a {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .hero-content h2 {
-        font-size: 2rem;
-    }
-
-    .section-header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .section-content,
-    .section-content.reverse {
-        flex-direction: column;
-    }
-
-    .comparison-card {
-        min-width: 100%;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-contact p {
-        justify-content: center;
-    }
-
-    .back-to-top {
-        left: 20px;
-        bottom: 20px;
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-
-    /* Responsive for personal info page */
-    .profile-section {
-        flex-direction: column;
-    }
-
-    .subjects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .subject-card,
-    .project-card {
-        margin-bottom: 20px;
-    }
-
-    .simple-info-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .simple-hobbies {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-
-    .simple-profile h1 {
-        font-size: 1.8rem;
-    }
-
-    .simple-profile-title {
-        font-size: 1.1rem;
-    }
-
-    .simple-profile-college {
-        font-size: 1rem;
-    }
-}
-
+/* ===== IMAGE STYLES ===== */
 .profile-image-background {
     width: 250px;
     height: 250px;
@@ -1057,19 +1036,15 @@ footer {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* معالجة الصور غير المربعة */
 .fixed-ratio-image {
     width: 200px;
     height: 200px;
     object-fit: cover;
     object-position: center;
-    /* قص الزوايا الزائدة */
-    clip-path: circle(50% at 50% 50%);
-    /* أو */
     border-radius: 50%;
 }
 
-/* ===== ENHANCED RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE DESIGN ===== */
 
 /* للأجهزة اللوحية متوسطة الحجم */
 @media (max-width: 1024px) {
@@ -1139,10 +1114,45 @@ footer {
         font-size: 1.5rem;
     }
     
-    /* تحسين الشريط العلوي */
+    /* تحسين القائمة المتنقلة */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .close-menu-btn {
+        display: block;
+    }
+    
     .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
         flex-direction: column;
-        width: 100%;
+        align-items: stretch;
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-menu::before {
+        content: 'القائمة الرئيسية';
+        display: block;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .nav-menu li {
@@ -1150,8 +1160,41 @@ footer {
     }
     
     .nav-menu a {
-        justify-content: center;
-        padding: 12px 15px;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        border-bottom: none;
+        border-right: 4px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        transition: all 0.3s ease;
+        text-align: right;
+    }
+    
+    .nav-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-right: 4px solid #f7df1e;
+    }
+    
+    .nav-menu a.active {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        border-right: 4px solid #f7df1e;
+    }
+    
+    .nav-menu i {
+        font-size: 1.3rem;
+        width: 30px;
+        text-align: center;
+    }
+    
+    /* طبقة التعتيم خلف القائمة */
+    .menu-overlay.active {
+        display: block;
     }
     
     /* تحسين الهيرو */
@@ -1309,6 +1352,22 @@ footer {
         font-size: 0.9rem;
     }
     
+    /* تحسين القائمة المتنقلة */
+    .nav-menu {
+        width: 85%;
+        max-width: 280px;
+    }
+    
+    .mobile-menu-toggle {
+        left: 15px;
+        font-size: 1.4rem;
+    }
+    
+    .close-menu-btn {
+        left: 15px;
+        font-size: 1.4rem;
+    }
+    
     /* تحسين الهيرو */
     .hero-content h2 {
         font-size: 1.6rem;
@@ -1451,6 +1510,10 @@ footer {
         width: 90px;
         height: 90px;
     }
+    
+    .nav-menu {
+        width: 90%;
+    }
 }
 
 /* للأجهزة ذات الشاشات العريضة */
@@ -1463,41 +1526,21 @@ footer {
     }
 }
 
-/* لتجنب تكبير النصوص على الأجهزة المحمولة */
-@media (max-width: 768px) {
-    input, 
-    select, 
-    textarea, 
-    button {
-        font-size: 16px; /* منع التكبير التلقائي على iOS */
-    }
-}
-
-/* تحسين للعرض العمودي على الهواتف */
-@media (max-width: 768px) and (orientation: portrait) {
-    .content-text, 
-    .content-image {
-        min-width: 100%;
-    }
-}
-
-/* تحسين للعرض الأفقي على الهواتف */
+/* تحسينات لشاشات الموبايل في الوضع الأفقي */
 @media (max-width: 768px) and (orientation: landscape) {
     .nav-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    
-    .nav-menu li {
-        width: auto;
+        width: 350px;
+        padding-top: 60px;
     }
     
     .nav-menu a {
-        width: auto;
+        padding: 10px 15px;
+        margin-bottom: 5px;
     }
     
-    .hero-content h2 {
-        font-size: 1.8rem;
+    .nav-menu::before {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
     }
     
     .simple-hobbies {
@@ -1505,15 +1548,23 @@ footer {
     }
 }
 
-/* تحسين قابلية الضغط على الأجهزة المحمولة */
+/* لتجنب تكبير النصوص على الأجهزة المحمولة */
 @media (max-width: 768px) {
+    input, 
+    select, 
+    textarea, 
+    button {
+        font-size: 16px;
+    }
+    
+    /* تحسين قابلية الضغط على الأجهزة المحمولة */
     .nav-menu a, 
     .simple-info-card, 
     .subject-card, 
     .project-card, 
     .simple-hobby, 
     .back-to-top {
-        min-height: 44px; /* الحجم الأدنى للضغط على شاشات اللمس */
+        min-height: 44px;
     }
     
     button, 
@@ -1527,11 +1578,22 @@ footer {
     }
 }
 
-/* تحسين للطباعة */
+/* تحسينات للعرض العمودي على الهواتف */
+@media (max-width: 768px) and (orientation: portrait) {
+    .content-text, 
+    .content-image {
+        min-width: 100%;
+    }
+}
+
+/* تحسينات للطباعة */
 @media print {
     .navbar, 
     .back-to-top, 
-    footer {
+    footer,
+    .mobile-menu-toggle,
+    .close-menu-btn,
+    .menu-overlay {
         display: none;
     }
     
@@ -1558,4 +1620,45 @@ footer {
         page-break-inside: avoid;
         margin: 20px 0;
     }
+    
+    .nav-menu {
+        position: static;
+        display: block;
+        background: none;
+        color: black;
+        box-shadow: none;
+        height: auto;
+        width: auto;
+        padding: 0;
+    }
+    
+    .nav-menu a {
+        color: black;
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+/* تحسينات للوضع المظلم على الجوال */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+    .nav-menu {
+        background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+    }
+    
+    .menu-overlay {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* تحسين شريط التمرير للقائمة */
+.nav-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nav-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
 }

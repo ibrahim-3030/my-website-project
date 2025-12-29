@@ -24,6 +24,11 @@
     <!-- شريط التنقل -->
     <nav class="navbar">
         <div class="nav-container">
+            <!-- زر القائمة المتنقلة -->
+            <button class="mobile-menu-toggle" aria-label="قائمة التنقل">
+                <i class="fas fa-bars"></i>
+            </button>
+            
             <ul class="nav-menu">
                 <li><a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a></li>
                 <li><a href="about.html"><i class="fas fa-user"></i> المعلومات الشخصية</a></li>
@@ -320,11 +325,80 @@ console.log("الناتج: " + result);</code></pre>
         <i class="fas fa-chevron-up"></i>
     </a>
     
-    <script src="script.js"></script>
-     <!-- هنا نضيف كود الـ JavaScript -->
+    <!-- ملف JavaScript -->
     <script>
-        // إضافة في نهاية body أو في ملف js منفصل
+        // ===== MOBILE MENU FUNCTIONALITY =====
         document.addEventListener('DOMContentLoaded', function() {
+            // إنشاء عناصر القائمة المتنقلة ديناميكياً
+            function createMobileMenuElements() {
+                // إنشاء طبقة التعتيم
+                const overlay = document.createElement('div');
+                overlay.className = 'menu-overlay';
+                
+                // إنشاء زر إغلاق
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-menu-btn';
+                closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                closeBtn.setAttribute('aria-label', 'إغلاق القائمة');
+                
+                // إضافتهم للصفحة
+                document.body.appendChild(overlay);
+                document.body.appendChild(closeBtn);
+                
+                return { overlay, closeBtn };
+            }
+            
+            // متغيرات القائمة
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            // إنشاء العناصر إذا كانت موجودة
+            if (mobileMenuToggle && navMenu) {
+                const { overlay, closeBtn } = createMobileMenuElements();
+                const menuOverlay = overlay;
+                const closeMenuBtn = closeBtn;
+                
+                // فتح/إغلاق القائمة
+                mobileMenuToggle.addEventListener('click', function() {
+                    navMenu.classList.add('active');
+                    menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                // إغلاق القائمة عند النقر على الطبقة الخلفية
+                menuOverlay.addEventListener('click', function() {
+                    closeMobileMenu();
+                });
+                
+                // إغلاق القائمة عند النقر على زر الإغلاق
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', closeMobileMenu);
+                }
+                
+                // إغلاق القائمة عند النقر على رابط
+                const navLinks = document.querySelectorAll('.nav-menu a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        setTimeout(closeMobileMenu, 300);
+                    });
+                });
+                
+                // إغلاق القائمة عند تغيير حجم النافذة
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMobileMenu();
+                    }
+                });
+                
+                // وظيفة إغلاق القائمة
+                function closeMobileMenu() {
+                    navMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+            
+            // ===== باقي كود Responsive =====
             // منع تكبير الصفحة على الهواتف عند النقر المزدوج
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(event) {
@@ -334,33 +408,66 @@ console.log("الناتج: " + result);</code></pre>
                 }
                 lastTouchEnd = now;
             }, false);
-
-            // إغلاق القائمة عند النقر على رابط في الشريط العلوي (للمحمول)
-            const navLinks = document.querySelectorAll('.nav-menu a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    // إذا كان الشريط العلوي في وضع المحمول (قائمة منسدلة)
-                    const navbar = document.querySelector('.navbar');
-                    if (window.getComputedStyle(navbar).position === 'fixed' || 
-                        window.innerWidth <= 768) {
-                        // هنا يمكن إضافة كود لإغلاق القائمة إذا كانت منسدلة
-                        console.log('Close mobile menu on link click');
-                    }
-                });
-            });
-
+            
             // تحسين تحميل الصور للأجهزة المختلفة
             const images = document.querySelectorAll('img');
             images.forEach(img => {
-                // إضافة lazy loading للصور
                 if (!img.hasAttribute('loading')) {
                     img.setAttribute('loading', 'lazy');
                 }
-                
-                // إضافة alt إذا لم يكن موجوداً
                 if (!img.hasAttribute('alt')) {
                     img.setAttribute('alt', 'صورة توضيحية');
                 }
+            });
+            
+            // زر العودة للأعلى
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.style.display = 'flex';
+                    } else {
+                        backToTopBtn.style.display = 'none';
+                    }
+                });
+                
+                backToTopBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // إضافة تأثيرات للمس على الأجهزة المحمولة
+            const touchElements = document.querySelectorAll('button, a, .comparison-card, .subject-card, .project-card, .simple-info-card');
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            // تحسين النقر على الروابط الداخلية
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
             });
         });
     </script>
