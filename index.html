@@ -321,5 +321,48 @@ console.log("الناتج: " + result);</code></pre>
     </a>
     
     <script src="script.js"></script>
+     <!-- هنا نضيف كود الـ JavaScript -->
+    <script>
+        // إضافة في نهاية body أو في ملف js منفصل
+        document.addEventListener('DOMContentLoaded', function() {
+            // منع تكبير الصفحة على الهواتف عند النقر المزدوج
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // إغلاق القائمة عند النقر على رابط في الشريط العلوي (للمحمول)
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // إذا كان الشريط العلوي في وضع المحمول (قائمة منسدلة)
+                    const navbar = document.querySelector('.navbar');
+                    if (window.getComputedStyle(navbar).position === 'fixed' || 
+                        window.innerWidth <= 768) {
+                        // هنا يمكن إضافة كود لإغلاق القائمة إذا كانت منسدلة
+                        console.log('Close mobile menu on link click');
+                    }
+                });
+            });
+
+            // تحسين تحميل الصور للأجهزة المختلفة
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                // إضافة lazy loading للصور
+                if (!img.hasAttribute('loading')) {
+                    img.setAttribute('loading', 'lazy');
+                }
+                
+                // إضافة alt إذا لم يكن موجوداً
+                if (!img.hasAttribute('alt')) {
+                    img.setAttribute('alt', 'صورة توضيحية');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
